@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Instruments</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: black;
+            color: white;
+        }
+
+        .navbar {
+            background-color: black !important;
+            border-bottom: 2px solid white;
+        }
+
+        .navbar-nav .nav-link {
+            color: #fff !important;
+            font-size: 18px;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #e9ecef !important;
+        }
+
+        .navbar-brand {
+            color: red !important;
+            font-size: 24px;
+        }
+
+        .container {
+            background-color: black;
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            max-width: 1000px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: #f8f9fa;
+        }
+
+        p {
+            color: #adb5bd;
+        }
+
+        label {
+            color: #f8f9fa;
+            font-weight: bold;
+        }
+
+        select,
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ced4da;
+            background-color: white;
+            color: black;
+            outline: none;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+
+        select:focus,
+        input[type="number"]:focus {
+            border-color: #80bdff;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 5px;
+            background-color: red;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+            font-size: 18px;
+            margin-top: 20px;
+        }
+
+        .btn-primary:hover {
+            background-color: darkred;
+        }
+
+        .navbar-text {
+            color: #fff !important;
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">CryptoZella</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/aboutdeveloper">About Developers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/dashboard">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/analytics">Analytics</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/calculate-profit-loss">View Wallet</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/contact">Contact Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Sign Out</a>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <span class="navbar-text">Welcome, {{ user }}</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <h1>Hello, {{ user }}</h1>
+        <p>You have selected an {{ account_type }} account with a size of {{ account_size }}.</p>
+        <p>Please provide details about your current investments.</p>
+
+        <form action="/calculate-profit-loss" method="post">
+            <div class="form-group">
+                <label for="instrument">Select Instrument</label>
+                <select class="form-control" id="instrument" name="instrument" required>
+                    {% if account_type == 'crypto' %}
+                        <option value="bitcoin">Bitcoin</option>
+                        <option value="ethereum">Ethereum</option>
+                        <option value="solana">Solana</option>
+                        <option value="matic">Matic</option>
+                        <option value="avax">Avax</option>
+                        <option value="doge">Doge</option>
+                        <option value="pepe">Pepe</option>
+                        <option value="super">Super</option>
+                        <option value="dot">Dot</option>
+                        <option value="cake">Cake</option>
+                        <option value="vet">Vet</option>
+                        <option value="ogn">Ogn</option>
+                    {% elif account_type == 'forex' %}
+                        <option value="eurusd">EUR/USD</option>
+                        <option value="usdjpy">USD/JPY</option>
+                        <option value="gbpusd">GBP/USD</option>
+                        <option value="audusd">AUD/USD</option>
+                        <option value="usdcad">USD/CAD</option>
+                        <option value="usdchf">USD/CHF</option>
+                        <option value="nzdusd">NZD/USD</option>
+                    {% elif account_type == 'stocks' %}
+                        <option value="aapl">Apple (AAPL)</option>
+                        <option value="amzn">Amazon (AMZN)</option>
+                        <option value="googl">Google (GOOGL)</option>
+                        <option value="msft">Microsoft (MSFT)</option>
+                        <option value="tsla">Tesla (TSLA)</option>
+                        <option value="fb">Facebook (FB)</option>
+                        <option value="nflx">Netflix (NFLX)</option>
+                    {% elif account_type == 'futures' %}
+                        <option value="es">S&P 500 (ES)</option>
+                        <option value="nq">Nasdaq 100 (NQ)</option>
+                        <option value="ym">Dow Jones (YM)</option>
+                        <option value="gc">Gold (GC)</option>
+                        <option value="cl">Crude Oil (CL)</option>
+                        <option value="si">Silver (SI)</option>
+                        <option value="hg">Copper (HG)</option>
+                    {% endif %}
+                </select>
+            </div>
+            <div class="form-group mt-3">
+                <label for="amount">Amount</label>
+                <input type="number" step="0.01" class="form-control" id="amount" name="amount" required>
+            </div>
+            <div class="form-group mt-3">
+                <label for="buying_price">Buying Price</label>
+                <input type="number" step="0.01" class="form-control" id="buying_price" name="buying_price" required>
+            </div>
+            <div class="form-group mt-3">
+                <label for="current_price">Current Price</label>
+                <input type="number" step="0.01" class="form-control" id="current_price" name="current_price" required>
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Submit</button>
+        </form>
+    </div>
+</body>
+
+</html>

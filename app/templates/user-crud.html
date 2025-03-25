@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FastAPI CRUD</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: black;
+            color: white;
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-control {
+            background-color: #333;
+            color: white;
+            border: 1px solid #555;
+        }
+
+        .form-control::placeholder {
+            color: #bbb;
+        }
+
+        .btn-primary {
+            background-color: red;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: darkred;
+        }
+
+        .btn-warning {
+            background-color: orange;
+            border: none;
+        }
+
+        .btn-warning:hover {
+            background-color: darkorange;
+        }
+
+        .btn-danger {
+            background-color: darkred;
+            border: none;
+        }
+
+        .btn-danger:hover {
+            background-color: firebrick;
+        }
+
+        table {
+            background-color: #000000;
+            color: white; /* Ensure table text is white */
+        }
+
+        th, td {
+            border: 1px solid #555;
+            color: white; /* Ensure table header and cell text is white */
+        }
+
+        th {
+            background-color: #333;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <a class="btn btn-primary mb-3" href="/back-to-home">Back to Home</a>
+        <h1>Users List</h1>
+        <form class="mb-4" method="post" action="/users/">
+            <div class="form-group">
+                <input type="text" class="form-control" name="wallet_id" placeholder="Wallet ID" required>
+            </div>
+            <div class="form-group mt-2">
+                <input type="password" class="form-control" name="password" placeholder="Password" required>
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Add User</button>
+        </form>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Wallet ID</th>
+                    <th>Password</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user['_id'] }}</td>
+                    <td>{{ user['wallet_id'] }}</td>
+                    <td>{{ user['password'] }}</td>
+                    <td>
+                        <form action="/users/{{ user['_id'] }}/update" style="display:inline;">
+                            <button type="submit" class="btn btn-warning btn-sm">Edit</button>
+                        </form>
+                        <form id="del-form-{{ user['_id'] }}" action="/users/{{ user['_id'] }}" style="display:inline;">
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                <script>
+                    document.getElementById('del-form-{{ user["_id"] }}').addEventListener('submit', function (e) {
+                        e.preventDefault();
+                        fetch(this.action, {
+                            method: 'DELETE'
+                        }).then(function (response) {
+                            if (response.ok) {
+                                window.location.reload();
+                            }
+                        });
+                    });
+                </script>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Result</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: black;
+            color: white;
+        }
+
+        .navbar {
+            background-color: black !important;
+            border-bottom: 2px solid white;
+        }
+
+        .navbar-nav .nav-link {
+            color: #fff !important;
+            font-size: 18px;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #e9ecef !important;
+        }
+
+        .navbar-brand {
+            color: red !important;
+            font-size: 24px;
+        }
+
+        .container {
+            background-color: black;
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            max-width: 1000px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: #f8f9fa;
+        }
+
+        p {
+            color: #adb5bd;
+        }
+
+        label {
+            color: #f8f9fa;
+            font-weight: bold;
+        }
+
+        table th, table td {
+            color: #f8f9fa;
+        }
+
+        .btn-primary, .btn-success, .btn-danger {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: red;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+            font-size: 18px;
+            margin-top: 20px;
+        }
+
+        .btn-primary:hover, .btn-success:hover, .btn-danger:hover {
+            background-color: darkred;
+        }
+
+        .navbar-text {
+            color: #fff !important;
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">CryptoZella</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/aboutdeveloper">About Developers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/dashboard">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/analytics">Analytics</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/calculate-profit-loss">View Wallet</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/contact">Contact Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Sign Out</a>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <span class="navbar-text">Welcome, {{ user }}</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <h1>Result</h1>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Instrument</th>
+                    <th>Amount</th>
+                    <th>Buying Price</th>
+                    <th>Current Price</th>
+                    <th>PNL</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="instruments-body">
+                {% for instrument in instruments %}
+                <tr id="instrument-{{ instrument._id }}">
+                    <td>{{ instrument.instrument }}</td>
+                    <td>{{ instrument.amount }}</td>
+                    <td>{{ instrument.buying_price }}</td>
+                    <td>{{ instrument.current_price }}</td>
+                    <td>{{ "{:.2f}".format(instrument.profit_loss|default(0)) }}</td>
+                    <td>
+                        <button class="btn btn-danger" onclick="deleteInstrument('{{ instrument._id }}')">Delete</button>
+                        <form action="/update-instrument/{{ instrument._id }}" method="get" style="display:inline;">
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h3>Total PnL: {{ "{:.2f}".format(total_pnl|default(0)) }}</h3>
+        <h3>Total Holdings: ${{ "{:.2f}".format(total_holdings|default(0)) }}</h3>  
+        <button type="button" class="btn btn-success" onclick="window.location.href='/select-instruments'">Add Instrument</button>
+        <button type="button" class="btn btn-success" onclick="window.location.href='/dashboard'">Back to Dashboard</button>
+        <button type="button" class="btn btn-success" onclick="window.location.href='/dashboard'">Select Other Market</button>
+        <button type="button" class="btn btn-success" onclick="window.location.href='/analytics'">Analytics</button>
+    </div>
+
+    <script>
+        async function deleteInstrument(instrumentId) {
+            const response = await fetch(`/delete-instrument/${instrumentId}`, {
+                method: 'POST'
+            });
+            if (response.ok) {
+                document.getElementById(`instrument-${instrumentId}`).remove();
+            } else {
+                alert('Failed to delete the instrument.');
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,142 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update User</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Update User</h1>
+        <form id="update-form" action="/users/{{ user['_id'] }}">
+            <div class="form-group">
+                <label for="_id">ID</label>
+                <input type="text" class="form-control" id="_id" name="_id" value="{{ user['_id'] }}" readonly>
+            </div>
+            <div class="form-group">
+                <label for="wallet_id">Wallet ID</label>
+                <input type="text" class="form-control" id="wallet_id" name="wallet_id" value="{{ user['wallet_id'] }}"
+                    required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="text" class="form-control" id="password" name="password" value="{{ user['password'] }}"
+                    required>
+            </div>
+            <button type="submit" class="btn btn-primary">Update User</button>
+        </form>
+    </div>
+    <script>
+        document.getElementById('update-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const formDataJson = Object.fromEntries(formData.entries()); // Convert FormData to JSON
+            console.log(formDataJson);
+            fetch(this.action, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formDataJson)
+            }).then(function (response) {
+                if (response.ok) {
+                    window.location.href = '/admin';
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update User</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: black;
+            color: white;
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-control {
+            background-color: #333;
+            color: white;
+            border: 1px solid #555;
+        }
+
+        .form-control::placeholder {
+            color: #bbb;
+        }
+
+        .btn-primary {
+            background-color: red;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: darkred;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Update User</h1>
+        <form id="update-form" action="/users/{{ user['_id'] }}">
+            <div class="form-group">
+                <label for="_id">ID</label>
+                <input type="text" class="form-control" id="_id" name="_id" value="{{ user['_id'] }}" readonly>
+            </div>
+            <div class="form-group mt-3">
+                <label for="wallet_id">Wallet ID</label>
+                <input type="text" class="form-control" id="wallet_id" name="wallet_id" value="{{ user['wallet_id'] }}" required>
+            </div>
+            <div class="form-group mt-3">
+                <label for="password">Password</label>
+                <input type="text" class="form-control" id="password" name="password" value="{{ user['password'] }}" required>
+            </div>
+            <button type="submit" class="btn btn-primary mt-4">Update User</button>
+        </form>
+    </div>
+    <script>
+        document.getElementById('update-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const formDataJson = Object.fromEntries(formData.entries()); // Convert FormData to JSON
+            console.log(formDataJson);
+            fetch(this.action, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formDataJson)
+            }).then(function (response) {
+                if (response.ok) {
+                    window.location.href = '/admin';
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>

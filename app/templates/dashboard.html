@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: black;
+            color: white;
+            margin-top: 70px;
+        }
+
+        .navbar {
+            background-color: black !important;
+            border-bottom: 2px solid white;
+        }
+
+        .navbar-nav .nav-link {
+            color: #fff !important;
+            font-size: 18px;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #e9ecef !important;
+        }
+
+        .navbar-brand {
+            color: red !important;
+            font-size: 24px;
+        }
+
+        .container {
+            background-color: black;
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            max-width: 1000px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: #f8f9fa;
+        }
+
+        p {
+            color: #adb5bd;
+        }
+
+        label {
+            color: #f8f9fa;
+            font-weight: bold;
+        }
+
+        select,
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ced4da;
+            background-color: #343a40;
+            color: #f8f9fa;
+            outline: none;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+
+        select:focus,
+        input[type="number"]:focus {
+            border-color: #80bdff;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 5px;
+            background-color: red;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+            font-size: 18px;
+            margin-top: 20px;
+        }
+
+        .btn-primary:hover {
+            background-color: darkred;
+        }
+
+        .navbar-text {
+            color: #fff !important;
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">CryptoZella</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/aboutdeveloper">About Developers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/dashboard">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/analytics">Analytics</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/calculate-profit-loss">View Wallet</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/contact">Contact Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Sign Out</a>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <span class="navbar-text">Welcome, {{ user }}</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <h1>Hello, {{ user }}</h1>
+        <p>Welcome to your dashboard. Please select your account type and size.</p>
+
+        <form action="/select-account" method="post">
+            <div class="form-group">
+                <label for="account_type">Select Account Type</label>
+                <select class="form-control" id="account_type" name="account_type" required>
+                    <option value="crypto">Crypto</option>
+                    <option value="forex">Forex</option>
+                    <option value="stocks">Stocks</option>
+                    <option value="futures">Futures</option>
+                </select>
+            </div>
+            <div class="form-group mt-3">
+                <label for="account_size">Select Account Size</label>
+                <select class="form-control" id="account_size" name="account_size" required>
+                    <option value="500">$500</option>
+                    <option value="1000">$1000</option>
+                    <option value="1500">$1500</option>
+                    <option value="2000">$2000</option>
+                    <option value="3000">$3000</option>
+                    <option value="3500">$3500</option>
+                    <option value="5000">$5000</option>
+                    <option value="10000">$10000</option>
+                    <option value="100000">$100000</option>
+                    <option value="3000000">$3000000</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Submit</button>
+        </form>
+    </div>
+</body>
+
+</html>
